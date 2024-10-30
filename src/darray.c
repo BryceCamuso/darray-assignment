@@ -7,6 +7,7 @@
  * Distributed under the Modified BSD License.
  */
 #include "darray.h"
+#include <stdlib.h>
 
 struct darray {
     int* array;
@@ -25,7 +26,7 @@ darray *da_create() {
         return NULL;
     }
 	newarray->size = 0;
-    newarray->array = (int*)malloc(0 * sizeof(int));
+    newarray->array = (int*)malloc(0);
     if (newarray->array == NULL) {
         free(newarray->size);
         free(newarray);
@@ -43,7 +44,7 @@ darray *da_create() {
  */
 int *da_get(darray *array, size_t idx) {
    size_t arraysize = array->size;
-    if(idx > arraysize || !array->array[idx]){
+    if(idx > arraysize || !(array->array[idx])){
         return NULL;
     }
     else{
@@ -58,7 +59,16 @@ int *da_get(darray *array, size_t idx) {
  * also if the provided array pointer is null.
  */
 int da_append(darray *array, int value) {
- 
+    int* temparray = realloc(array->array, sizeof(int*) * (array->size + 1));
+    if(!temparray){
+        return 0;
+    }
+    else{
+        temparray[(int) array->size] = value;
+        array->array = temparray;
+        array->size++;
+        return 1;
+    }
 }
 
 /*
@@ -67,7 +77,7 @@ int da_append(darray *array, int value) {
  * which may be larger. If array is NULL, return 0.
  */
 size_t da_size(darray *array) {
- 
+    return array->size;
 }
 
 /*

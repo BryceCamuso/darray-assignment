@@ -15,6 +15,7 @@ build:
 	mkdir -p include
 	mkdir -p bin/tests
 	mkdir -p lib
+	mkdir -p build
 
 .PHONY: clean
 clean:
@@ -28,12 +29,12 @@ $(TARGET): build build/darray.o
 
 .PHONY: tests
 tests: LDLIBS += -lcheck -lsubunit
-tests: test/test/darray_test.c.c
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) test/test/darray_test.c.c $(TARGET) -o bin/tests/test/darray_test.c
+tests: test/darray_test.c
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) test/darray_test.c $(TARGET) -o bin/tests/darray_test
 
 
-build/darray.o: include/darray.c include/darray.h
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -c include/darray.c -o build/darray.o
+build/darray.o: src/darray.c include/darray.h
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -c src/darray.c -o build/darray.o
 
 
 	
