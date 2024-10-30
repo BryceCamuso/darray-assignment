@@ -9,7 +9,8 @@
 #include "darray.h"
 
 struct darray {
-  /* your attributes go here */
+    int* array;
+    size_t size;
 };
 
 /*
@@ -17,7 +18,21 @@ struct darray {
  * creation should fail, return NULL.
  */
 darray *da_create() {
- 
+   	darray *newarray;
+    newarray = (darray *)malloc(sizeof(darray));
+    if (newarray == NULL) {
+        printf("ERROR: Failed to allocate memory for darray.");
+        return NULL;
+    }
+	newarray->size = 0;
+    newarray->array = (int*)malloc(0 * sizeof(int));
+    if (newarray->array == NULL) {
+        free(newarray->size);
+        free(newarray);
+        printf("ERROR: Failed to allocate memory for darray.");
+        return NULL;
+    }
+    return newarray;
 }
 
 
@@ -27,7 +42,14 @@ darray *da_create() {
  * instead. If the provided array pointer is NULL, return NULL.
  */
 int *da_get(darray *array, size_t idx) {
- 
+   size_t arraysize = array->size;
+    if(idx > arraysize || !array->array[idx]){
+        return NULL;
+    }
+    else{
+        int *returnValue = array->array[idx];
+        return returnValue;
+    }
 }
 
 /*
@@ -53,5 +75,7 @@ size_t da_size(darray *array) {
  * nothing.
  */
 void da_delete(darray *array) {
- 
+    free(array->size);
+    free(array->array);
+    free(array);
 }
