@@ -3,14 +3,29 @@ CFLAGS = -Wall -Wextra -Iinclude -std=c2x
 
 TARGET = lib/libarray.a
 
+.PHONY: all
+all: release
+all: build
+all: 
+	bin/tests/darray_test
+
+
+.PHONY: debugAll
+debugAll:clean
+debugAll: debug
+debugAll:
+	gdb bin/tests/darray_test
+
+
+
 .PHONY: release
 release: CFLAGS += -O3
 release: $(TARGET) tests
 
 
 debug: CFLAGS += -O0 -g
-debug: $(TARGET) tests
-debug: $(TARGET) build
+debug: $(TARGET) build tests
+
 
 .PHONY: build
 build:

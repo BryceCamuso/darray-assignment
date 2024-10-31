@@ -8,6 +8,7 @@
  */
 #include "darray.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct darray {
     int* array;
@@ -28,7 +29,6 @@ darray *da_create() {
 	newarray->size = 0;
     newarray->array = (int*)malloc(0);
     if (newarray->array == NULL) {
-        free(newarray->size);
         free(newarray);
         printf("ERROR: Failed to allocate memory for darray.");
         return NULL;
@@ -44,11 +44,11 @@ darray *da_create() {
  */
 int *da_get(darray *array, size_t idx) {
    size_t arraysize = array->size;
-    if(idx >= arraysize || (array->array)[idx] == NULL ){
+    if(idx >= arraysize){
         return NULL;
     }
     else{
-        int *returnValue = (array->array)[idx];
+        int *returnValue =  &array->array[idx];
         return returnValue;
     }
 }
