@@ -44,11 +44,11 @@ darray *da_create() {
  */
 int *da_get(darray *array, size_t idx) {
    size_t arraysize = array->size;
-    if(idx > arraysize || !(array->array[idx])){
+    if(idx >= arraysize || (array->array)[idx] == NULL ){
         return NULL;
     }
     else{
-        int *returnValue = array->array[idx];
+        int *returnValue = (array->array)[idx];
         return returnValue;
     }
 }
@@ -85,7 +85,6 @@ size_t da_size(darray *array) {
  * nothing.
  */
 void da_delete(darray *array) {
-    free(array->size);
     free(array->array);
     free(array);
 }
