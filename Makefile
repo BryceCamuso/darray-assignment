@@ -7,8 +7,10 @@ TARGET = lib/libarray.a
 release: CFLAGS += -O3
 release: $(TARGET) tests
 
+
 debug: CFLAGS += -O0 -g
 debug: $(TARGET) tests
+debug: $(TARGET) build
 
 .PHONY: build
 build:
